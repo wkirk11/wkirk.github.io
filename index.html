@@ -56,7 +56,6 @@
         transform: rotate(10deg) scale(1.1);
       }
 
-      /* Spin animation */
       @keyframes spin-once {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -78,8 +77,8 @@
     <h2>Contact</h2>
     <p>Email: wkirk@stanford.edu</p>
 
-    <!-- Mysterious Flower Button -->
-    <a class="mystery-button" href="secret.html" title="Discover more">
+    <!-- Mysterious Flower Button now links to future.html -->
+    <a class="mystery-button" href="future.html" title="Future Work">
       <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
     </a>
 
@@ -92,9 +91,8 @@
         void mysteryImg.offsetWidth; // Trigger reflow to restart animation
         mysteryImg.classList.add('spin');
 
-        // Navigate after animation (optional)
         setTimeout(() => {
-          window.location.href = 'secret.html';
+          window.location.href = 'future.html';
         }, 800); // Matches the animation duration
       });
     </script>
