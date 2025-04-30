@@ -13,6 +13,7 @@
         padding: 0 20px;
         background-color: #fff;
         text-align: center;
+        position: relative;
       }
 
       h1, h2 {
@@ -37,6 +38,33 @@
       .leaf-button img:hover {
         transform: scale(1.05);
       }
+
+      .mystery-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        cursor: pointer;
+      }
+
+      .mystery-button img {
+        height: 60px;
+        transition: transform 0.3s ease;
+      }
+
+      .mystery-button img:hover {
+        transform: rotate(10deg) scale(1.1);
+      }
+
+      /* Spin animation */
+      @keyframes spin-once {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .spin {
+        animation: spin-once 0.8s ease-in-out;
+      }
     </style>
   </head>
   <body>
@@ -49,5 +77,26 @@
 
     <h2>Contact</h2>
     <p>Email: wkirk@stanford.edu</p>
+
+    <!-- Mysterious Flower Button -->
+    <a class="mystery-button" href="secret.html" title="Discover more">
+      <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
+    </a>
+
+    <script>
+      const mysteryImg = document.getElementById('mysteryImage');
+
+      mysteryImg.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevents link from navigating immediately
+        mysteryImg.classList.remove('spin'); // Reset animation
+        void mysteryImg.offsetWidth; // Trigger reflow to restart animation
+        mysteryImg.classList.add('spin');
+
+        // Navigate after animation (optional)
+        setTimeout(() => {
+          window.location.href = 'secret.html';
+        }, 800); // Matches the animation duration
+      });
+    </script>
   </body>
 </html>
