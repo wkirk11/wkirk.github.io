@@ -12,10 +12,33 @@
         line-height: 1.6;
         padding: 0 20px;
         background-color: #fff;
+        text-align: center;
       }
 
       h1 {
-        text-align: center;
+        color: #333;
+      }
+
+      .project-button {
+        display: inline-block;
+        margin: 30px 0;
+        text-decoration: none;
+      }
+
+      .project-button img {
+        max-height: 200px;
+        transition: transform 0.2s ease;
+        cursor: pointer;
+      }
+
+      .project-button:hover img {
+        transform: scale(1.05);
+      }
+
+      .project-title {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 1.1em;
         color: #333;
       }
     </style>
@@ -23,5 +46,10 @@
   <body>
     <h1>Projects</h1>
     <p>This is where I’ll share work related to Earth Systems, Math, and more.</p>
+
+    <a class="project-button" href="https://arcg.is/05XT0r1" target="_blank">
+      <img src="mountain_pink.png" alt="Zeltnera Mapping Project" />
+      <div class="project-title">Zeltnera Mapping Project</div>
+    </a>
   </body>
 </html>
