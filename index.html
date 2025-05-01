@@ -39,36 +39,32 @@
         transform: scale(1.05);
       }
 
-      /* Mysterious Flower Button - Bottom Right */
-      .mystery-button {
+      /* Bottom Button Containers */
+      .mystery-button,
+      .clematis-button {
         position: fixed;
         bottom: 20px;
-        right: 20px;
         z-index: 1000;
         cursor: pointer;
       }
 
-      .mystery-button img {
-        height: 75px; /* slightly larger */
+      .mystery-button {
+        right: 20px;
+      }
+
+      .clematis-button {
+        left: 20px;
+      }
+
+      /* Shared Button Style */
+      .mystery-button img,
+      .clematis-button img {
+        height: 100px;
         transition: transform 0.3s ease;
       }
 
       .mystery-button img:hover {
         transform: rotate(10deg) scale(1.1);
-      }
-
-      /* Clematis Button - Bottom Left */
-      .clematis-button {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1000;
-        cursor: pointer;
-      }
-
-      .clematis-button img {
-        height: 75px; /* slightly larger */
-        transition: transform 0.3s ease;
       }
 
       .clematis-button img:hover {
@@ -87,26 +83,33 @@
     </style>
   </head>
   <body>
+    <!-- Top Entry Button -->
     <a class="leaf-button" href="projects.html" target="_blank">
       <img src="smoke_tree_branch.png" alt="Enter site via leaf image" />
     </a>
 
+    <!-- Content -->
     <h1>Weston Kirk</h1>
-    <p>I'm an undergraduate at Stanford studying Earth Systems and Math. Currently, I work in the Daru Lab on a project involving crop wild relatives. I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.</p>
+    <p>
+      I'm an undergraduate at Stanford studying Earth Systems and Math.
+      Currently, I work in the Daru Lab on a project involving crop wild relatives.
+      I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.
+    </p>
 
     <h2>Contact</h2>
     <p>Email: wkirk@stanford.edu</p>
 
-    <!-- Mysterious Flower Button -->
+    <!-- Bottom Right: Milkweed Vine Flower Button -->
     <a class="mystery-button" href="future.html" title="Future Work">
       <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
     </a>
 
-    <!-- Clematis Seed Button -->
+    <!-- Bottom Left: Clematis Seed Button -->
     <a class="clematis-button" href="clematis.html" title="Explore the Clematis">
       <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
     </a>
 
+    <!-- JavaScript for Spin and Redirect -->
     <script>
       // Milkweed Vine Button Spin + Redirect
       const mysteryImg = document.getElementById('mysteryImage');
