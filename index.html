@@ -39,6 +39,7 @@
         transform: scale(1.05);
       }
 
+      /* Mysterious Flower Button - Bottom Right */
       .mystery-button {
         position: fixed;
         bottom: 20px;
@@ -48,7 +49,7 @@
       }
 
       .mystery-button img {
-        height: 60px;
+        height: 75px; /* slightly larger */
         transition: transform 0.3s ease;
       }
 
@@ -56,6 +57,25 @@
         transform: rotate(10deg) scale(1.1);
       }
 
+      /* Clematis Button - Bottom Left */
+      .clematis-button {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+        cursor: pointer;
+      }
+
+      .clematis-button img {
+        height: 75px; /* slightly larger */
+        transition: transform 0.3s ease;
+      }
+
+      .clematis-button img:hover {
+        transform: rotate(-10deg) scale(1.1);
+      }
+
+      /* Spin animation */
       @keyframes spin-once {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -77,23 +97,39 @@
     <h2>Contact</h2>
     <p>Email: wkirk@stanford.edu</p>
 
-    <!-- Mysterious Flower Button now links to future.html -->
+    <!-- Mysterious Flower Button -->
     <a class="mystery-button" href="future.html" title="Future Work">
       <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
     </a>
 
+    <!-- Clematis Seed Button -->
+    <a class="clematis-button" href="clematis.html" title="Explore the Clematis">
+      <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
+    </a>
+
     <script>
+      // Milkweed Vine Button Spin + Redirect
       const mysteryImg = document.getElementById('mysteryImage');
-
       mysteryImg.addEventListener('click', function (e) {
-        e.preventDefault(); // Prevents link from navigating immediately
-        mysteryImg.classList.remove('spin'); // Reset animation
-        void mysteryImg.offsetWidth; // Trigger reflow to restart animation
+        e.preventDefault();
+        mysteryImg.classList.remove('spin');
+        void mysteryImg.offsetWidth;
         mysteryImg.classList.add('spin');
-
         setTimeout(() => {
           window.location.href = 'future.html';
-        }, 800); // Matches the animation duration
+        }, 800);
+      });
+
+      // Clematis Seed Button Spin + Redirect
+      const clematisImg = document.getElementById('clematisImage');
+      clematisImg.addEventListener('click', function (e) {
+        e.preventDefault();
+        clematisImg.classList.remove('spin');
+        void clematisImg.offsetWidth;
+        clematisImg.classList.add('spin');
+        setTimeout(() => {
+          window.location.href = 'clematis.html';
+        }, 800);
       });
     </script>
   </body>
