@@ -146,23 +146,25 @@
   </a>
 
   <script>
-    function setupHoverDisplay(imgId, msgId, sessionKey) {
+    function setupHoverDisplay(imgId, msgId) {
       const img = document.getElementById(imgId);
       const msg = document.getElementById(msgId);
+      let timeout;
 
       img.addEventListener('mouseenter', () => {
-        if (sessionStorage.getItem(sessionKey)) return;
+        clearTimeout(timeout);
         msg.classList.add('visible');
-        sessionStorage.setItem(sessionKey, 'true');
-        setTimeout(() => msg.classList.remove('visible'), 15000);
+        timeout = setTimeout(() => {
+          msg.classList.remove('visible');
+        }, 15000);
       });
     }
 
-    setupHoverDisplay('treeImage', 'treeMessage', 'treeMsgShown');
-    setupHoverDisplay('clematisImage', 'clematisMessage', 'clematisMsgShown');
-    setupHoverDisplay('mysteryImage', 'futureMessage', 'futureMsgShown');
+    setupHoverDisplay('treeImage', 'treeMessage');
+    setupHoverDisplay('clematisImage', 'clematisMessage');
+    setupHoverDisplay('mysteryImage', 'futureMessage');
 
-    // Button spins
+    // Spin + redirect buttons
     document.getElementById('mysteryImage').addEventListener('click', function (e) {
       e.preventDefault();
       this.classList.remove('spin');
