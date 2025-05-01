@@ -114,6 +114,31 @@
       .spin {
         animation: spin-once 0.8s ease-in-out;
       }
+
+      .bottom-message {
+        position: fixed;
+        bottom: 140px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        padding: 10px 20px;
+        font-size: 1em;
+        color: #444;
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        opacity: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 0.15em solid transparent;
+        width: 0;
+        animation: none;
+        z-index: 999;
+        text-align: center;
+      }
+
+      .bottom-message.reveal {
+        animation: revealText 2s steps(50, end) forwards;
+      }
     </style>
   </head>
   <body>
@@ -131,7 +156,7 @@
         <p>Email: wkirk@stanford.edu</p>
 
         <div class="hover-message" id="hoverMessage">
-          Click on the American Smoke Tree to see some of my projects!
+          Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
         </div>
       </div>
 
@@ -152,21 +177,35 @@
       <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
     </a>
 
+    <!-- Bottom Messages -->
+    <div class="bottom-message" id="futureMessage">
+      Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
+    </div>
+    <div class="bottom-message" id="clematisMessage">
+      Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
+    </div>
+
     <script>
       // Tree hover message reveal once
       const treeImage = document.getElementById('treeImage');
       const hoverMessage = document.getElementById('hoverMessage');
-      let messageShown = sessionStorage.getItem('treeMessageShown');
-
-      treeImage.addEventListener('mouseenter', () => {
-        if (!messageShown) {
+      if (!sessionStorage.getItem('treeMessageShown')) {
+        treeImage.addEventListener('mouseenter', () => {
           hoverMessage.classList.add('reveal');
           sessionStorage.setItem('treeMessageShown', 'true');
-        }
-      });
+        });
+      }
 
-      // Spin interactions
-      document.getElementById('mysteryImage').addEventListener('click', function (e) {
+      // Spin + redirect with message for mystery button
+      const futureImg = document.getElementById('mysteryImage');
+      const futureMsg = document.getElementById('futureMessage');
+      if (!sessionStorage.getItem('futureMessageShown')) {
+        futureImg.addEventListener('mouseenter', () => {
+          futureMsg.classList.add('reveal');
+          sessionStorage.setItem('futureMessageShown', 'true');
+        });
+      }
+      futureImg.addEventListener('click', function (e) {
         e.preventDefault();
         this.classList.remove('spin');
         void this.offsetWidth;
@@ -174,7 +213,16 @@
         setTimeout(() => window.location.href = 'future.html', 800);
       });
 
-      document.getElementById('clematisImage').addEventListener('click', function (e) {
+      // Spin + redirect with message for clematis button
+      const clematisImg = document.getElementById('clematisImage');
+      const clematisMsg = document.getElementById('clematisMessage');
+      if (!sessionStorage.getItem('clematisMessageShown')) {
+        clematisImg.addEventListener('mouseenter', () => {
+          clematisMsg.classList.add('reveal');
+          sessionStorage.setItem('clematisMessageShown', 'true');
+        });
+      }
+      clematisImg.addEventListener('click', function (e) {
         e.preventDefault();
         this.classList.remove('spin');
         void this.offsetWidth;
