@@ -7,18 +7,27 @@
     <style>
       body {
         font-family: 'Lora', serif;
-        max-width: 700px;
-        margin: 40px auto;
-        line-height: 1.6;
-        padding: 0 20px;
+        margin: 0;
+        padding: 40px;
         background-color: #fff;
-        text-align: center;
-        position: relative;
         overflow-x: hidden;
+        position: relative;
+      }
+
+      .content-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .text-content {
+        max-width: 50%;
+        text-align: left;
       }
 
       h1, h2 {
         color: #333;
+        margin-top: 0;
       }
 
       a {
@@ -28,12 +37,6 @@
 
       a:hover {
         text-decoration: underline;
-      }
-
-      .leaf-button {
-        position: relative;
-        display: inline-block;
-        z-index: 1;
       }
 
       .leaf-button img {
@@ -46,37 +49,7 @@
         transform: scale(1.05);
       }
 
-      .falling-leaf {
-        position: absolute;
-        width: 20px;
-        pointer-events: none;
-        opacity: 0.9;
-        animation: driftSoft 5s ease-in-out forwards;
-        z-index: 0;
-      }
-
-      @keyframes driftSoft {
-        0% {
-          transform: translate(0, 0) rotate(0deg);
-          opacity: 1;
-        }
-        25% {
-          transform: translateX(15px) translateY(100px) rotate(90deg);
-        }
-        50% {
-          transform: translateX(30px) translateY(200px) rotate(180deg);
-        }
-        75% {
-          transform: translateX(50px) translateY(300px) rotate(270deg);
-        }
-        100% {
-          transform: translateX(70px) translateY(400px) rotate(360deg);
-          opacity: 0;
-        }
-      }
-
       .hover-message {
-        margin-top: 30px;
         font-size: 1.1em;
         color: #444;
         opacity: 0;
@@ -85,8 +58,7 @@
         border-right: 0.15em solid transparent;
         width: 0;
         animation: none;
-        margin-left: auto;
-        margin-right: auto;
+        margin-top: 20px;
       }
 
       .hover-message.reveal {
@@ -145,31 +117,31 @@
     </style>
   </head>
   <body>
+    <div class="content-wrapper">
+      <!-- Text content on the left -->
+      <div class="text-content">
+        <h1>Weston Kirk</h1>
+        <p>
+          I'm an undergraduate at Stanford studying Earth Systems and Math.
+          Currently, I work in the Daru Lab on a project involving crop wild relatives.
+          I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.
+        </p>
 
-    <!-- Transparent Hover Zone to trigger animation -->
-    <div id="treeZone" style="height: 220px; width: 100%; position: relative;">
-      <!-- Tree Image -->
+        <h2>Contact</h2>
+        <p>Email: wkirk@stanford.edu</p>
+
+        <div class="hover-message" id="hoverMessage">
+          Click on the American Smoke Tree to see some of my projects!
+        </div>
+      </div>
+
+      <!-- Tree button on the right -->
       <div class="leaf-button">
         <a href="projects.html" target="_blank">
           <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
         </a>
       </div>
     </div>
-
-    <!-- Message that appears after leaves fall -->
-    <div class="hover-message" id="hoverMessage">
-      Click on the American Smoke Tree to see some of my projects!
-    </div>
-
-    <h1>Weston Kirk</h1>
-    <p>
-      I'm an undergraduate at Stanford studying Earth Systems and Math.
-      Currently, I work in the Daru Lab on a project involving crop wild relatives.
-      I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.
-    </p>
-
-    <h2>Contact</h2>
-    <p>Email: wkirk@stanford.edu</p>
 
     <!-- Bottom Buttons -->
     <a class="mystery-button" href="future.html" title="Future Work">
@@ -181,45 +153,19 @@
     </a>
 
     <script>
-      const treeZone = document.getElementById('treeZone');
+      // Tree hover message reveal once
       const treeImage = document.getElementById('treeImage');
       const hoverMessage = document.getElementById('hoverMessage');
-      const leafImages = ['leaf1.png', 'leaf2.png', 'leaf3.png'];
-      let animationPlayed = sessionStorage.getItem('leafAnimationPlayed');
+      let messageShown = sessionStorage.getItem('treeMessageShown');
 
-      function createLeaf() {
-        const leaf = document.createElement('img');
-        leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
-        leaf.classList.add('falling-leaf');
-
-        const treeRect = treeImage.getBoundingClientRect();
-        const bodyRect = document.body.getBoundingClientRect();
-        const treeCenterX = treeRect.left + treeRect.width / 2 - bodyRect.left;
-
-        const offsetX = (Math.random() - 0.5) * 80;
-        const startX = treeCenterX + offsetX;
-
-        leaf.style.left = `${startX}px`;
-        leaf.style.top = `${treeRect.top + treeRect.height / 4 - bodyRect.top}px`; // center crown
-
-        treeZone.appendChild(leaf);
-        setTimeout(() => leaf.remove(), 6000);
-      }
-
-      function triggerLeafAnimationOnce() {
-        if (animationPlayed) return;
-
-        for (let i = 0; i < 20; i++) {
-          setTimeout(createLeaf, i * 150);
+      treeImage.addEventListener('mouseenter', () => {
+        if (!messageShown) {
+          hoverMessage.classList.add('reveal');
+          sessionStorage.setItem('treeMessageShown', 'true');
         }
+      });
 
-        setTimeout(() => hoverMessage.classList.add('reveal'), 4500);
-        sessionStorage.setItem('leafAnimationPlayed', 'true');
-      }
-
-      treeZone.addEventListener('mouseenter', triggerLeafAnimationOnce);
-
-      // Button spins
+      // Spin interactions
       document.getElementById('mysteryImage').addEventListener('click', function (e) {
         e.preventDefault();
         this.classList.remove('spin');
@@ -236,6 +182,5 @@
         setTimeout(() => window.location.href = 'clematis.html', 800);
       });
     </script>
-
   </body>
 </html>
