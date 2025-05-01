@@ -33,14 +33,13 @@
       .leaf-button {
         position: relative;
         display: inline-block;
+        z-index: 1;
       }
 
       .leaf-button img {
         max-height: 200px;
         cursor: pointer;
         transition: transform 0.2s ease;
-        z-index: 1;
-        position: relative;
       }
 
       .leaf-button img:hover {
@@ -49,7 +48,7 @@
 
       .falling-leaf {
         position: absolute;
-        width: 25px;
+        width: 20px;
         pointer-events: none;
         opacity: 0.9;
         animation: driftSoft 5s ease-in-out forwards;
@@ -61,16 +60,17 @@
           transform: translate(0, 0) rotate(0deg);
           opacity: 1;
         }
-        30% {
-          transform: translateX(20px) translateY(100px) rotate(45deg);
-          opacity: 0.9;
+        25% {
+          transform: translateX(15px) translateY(100px) rotate(90deg);
         }
-        60% {
-          transform: translateX(60px) translateY(200px) rotate(90deg);
-          opacity: 0.8;
+        50% {
+          transform: translateX(30px) translateY(200px) rotate(180deg);
+        }
+        75% {
+          transform: translateX(50px) translateY(300px) rotate(270deg);
         }
         100% {
-          transform: translateX(100px) translateY(350px) rotate(120deg);
+          transform: translateX(70px) translateY(400px) rotate(360deg);
           opacity: 0;
         }
       }
@@ -104,7 +104,6 @@
         }
       }
 
-      /* Bottom Buttons */
       .mystery-button,
       .clematis-button {
         position: fixed;
@@ -147,7 +146,7 @@
   </head>
   <body>
 
-    <!-- Transparent Hover Zone (to trigger animation) -->
+    <!-- Transparent Hover Zone to trigger animation -->
     <div id="treeZone" style="height: 220px; width: 100%; position: relative;">
       <!-- Tree Image -->
       <div class="leaf-button">
@@ -157,7 +156,7 @@
       </div>
     </div>
 
-    <!-- Message Appears After Animation -->
+    <!-- Message that appears after leaves fall -->
     <div class="hover-message" id="hoverMessage">
       Click on the American Smoke Tree to see some of my projects!
     </div>
@@ -186,7 +185,6 @@
       const treeImage = document.getElementById('treeImage');
       const hoverMessage = document.getElementById('hoverMessage');
       const leafImages = ['leaf1.png', 'leaf2.png', 'leaf3.png'];
-
       let animationPlayed = sessionStorage.getItem('leafAnimationPlayed');
 
       function createLeaf() {
@@ -194,11 +192,15 @@
         leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
         leaf.classList.add('falling-leaf');
 
-        // Position leaf near center of the tree
-        const rect = treeImage.getBoundingClientRect();
-        const offsetX = (Math.random() - 0.5) * 100;
-        leaf.style.left = `${treeImage.offsetLeft + treeImage.offsetWidth / 2 + offsetX}px`;
-        leaf.style.top = `80px`; // middle-ish
+        const treeRect = treeImage.getBoundingClientRect();
+        const bodyRect = document.body.getBoundingClientRect();
+        const treeCenterX = treeRect.left + treeRect.width / 2 - bodyRect.left;
+
+        const offsetX = (Math.random() - 0.5) * 80;
+        const startX = treeCenterX + offsetX;
+
+        leaf.style.left = `${startX}px`;
+        leaf.style.top = `${treeRect.top + treeRect.height / 4 - bodyRect.top}px`; // center crown
 
         treeZone.appendChild(leaf);
         setTimeout(() => leaf.remove(), 6000);
@@ -207,18 +209,17 @@
       function triggerLeafAnimationOnce() {
         if (animationPlayed) return;
 
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 20; i++) {
           setTimeout(createLeaf, i * 150);
         }
 
-        setTimeout(() => hoverMessage.classList.add('reveal'), 4000);
+        setTimeout(() => hoverMessage.classList.add('reveal'), 4500);
         sessionStorage.setItem('leafAnimationPlayed', 'true');
       }
 
-      // Trigger when user first hovers over tree zone
       treeZone.addEventListener('mouseenter', triggerLeafAnimationOnce);
 
-      // Bottom button spins
+      // Button spins
       document.getElementById('mysteryImage').addEventListener('click', function (e) {
         e.preventDefault();
         this.classList.remove('spin');
