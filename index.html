@@ -50,34 +50,51 @@
         width: 40px;
         pointer-events: none;
         opacity: 0.8;
-        animation: driftAndFlip 2.5s ease forwards;
+        animation: gustAndSpin 3s ease-in-out forwards;
       }
 
-      @keyframes driftAndFlip {
+      @keyframes gustAndSpin {
         0% {
-          transform: translateY(0) translateX(0) rotateY(0deg);
+          transform: translateY(0) translateX(0) rotate(0deg);
           opacity: 1;
         }
         50% {
-          transform: translateY(-30px) translateX(60px) rotateY(180deg);
-          opacity: 0.8;
+          transform: translateY(120px) translateX(30px) rotate(720deg);
+          opacity: 0.9;
         }
         100% {
-          transform: translateY(-10px) translateX(400px) rotateY(360deg);
+          transform: translateY(250px) translateX(400px) rotate(1440deg);
           opacity: 0;
         }
       }
 
       .hover-message {
-        margin-top: 20px;
+        margin-top: 30px;
         font-size: 1.1em;
         color: #444;
         opacity: 0;
-        transition: opacity 1s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 0.15em solid transparent;
+        width: 0;
+        animation: none;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .hover-message.visible {
-        opacity: 1;
+      .hover-message.reveal {
+        animation: revealText 2s steps(40, end) forwards;
+      }
+
+      @keyframes revealText {
+        from {
+          width: 0;
+          opacity: 1;
+        }
+        to {
+          width: 100%;
+          opacity: 1;
+        }
       }
 
       /* Bottom Buttons */
@@ -123,7 +140,7 @@
   </head>
   <body>
 
-    <!-- Tree Interaction Zone -->
+    <!-- Tree Hover Zone -->
     <div class="leaf-container" id="leafZone">
       <a class="leaf-button" href="projects.html" target="_blank">
         <img src="smoke_tree_branch.png" alt="Enter site via leaf image" />
@@ -165,11 +182,11 @@
         const leaf = document.createElement('img');
         leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
         leaf.classList.add('falling-leaf');
-        leaf.style.left = Math.random() * 120 + 40 + 'px';
+        leaf.style.left = Math.random() * 150 + 40 + 'px';
         leaf.style.top = '-20px';
         leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
         leafZone.appendChild(leaf);
-        setTimeout(() => leaf.remove(), 3000);
+        setTimeout(() => leaf.remove(), 3500);
       }
 
       function triggerLeafAnimationOnce() {
@@ -177,7 +194,7 @@
         for (let i = 0; i < 5; i++) {
           setTimeout(createLeaf, i * 300);
         }
-        setTimeout(() => hoverMessage.classList.add('visible'), 2500);
+        setTimeout(() => hoverMessage.classList.add('reveal'), 2800);
         sessionStorage.setItem('leafAnimationPlayed', 'true');
       }
 
