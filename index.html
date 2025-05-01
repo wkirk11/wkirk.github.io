@@ -49,24 +49,28 @@
 
       .falling-leaf {
         position: absolute;
-        width: 40px;
+        width: 25px;
         pointer-events: none;
         opacity: 0.9;
-        animation: gustSpin 3s ease-in-out forwards;
+        animation: driftSoft 5s ease-in-out forwards;
         z-index: 0;
       }
 
-      @keyframes gustSpin {
+      @keyframes driftSoft {
         0% {
           transform: translate(0, 0) rotate(0deg);
           opacity: 1;
         }
-        50% {
-          transform: translate(40px, 150px) rotate(720deg);
+        30% {
+          transform: translateX(20px) translateY(100px) rotate(45deg);
           opacity: 0.9;
         }
+        60% {
+          transform: translateX(60px) translateY(200px) rotate(90deg);
+          opacity: 0.8;
+        }
         100% {
-          transform: translate(400px, 280px) rotate(1440deg);
+          transform: translateX(100px) translateY(350px) rotate(120deg);
           opacity: 0;
         }
       }
@@ -143,11 +147,14 @@
   </head>
   <body>
 
-    <!-- Tree Zone with Falling Leaves -->
-    <div class="leaf-button" id="leafZone">
-      <a href="projects.html" target="_blank">
-        <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
-      </a>
+    <!-- Transparent Hover Zone (to trigger animation) -->
+    <div id="treeZone" style="height: 220px; width: 100%; position: relative;">
+      <!-- Tree Image -->
+      <div class="leaf-button">
+        <a href="projects.html" target="_blank">
+          <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
+        </a>
+      </div>
     </div>
 
     <!-- Message Appears After Animation -->
@@ -175,8 +182,8 @@
     </a>
 
     <script>
+      const treeZone = document.getElementById('treeZone');
       const treeImage = document.getElementById('treeImage');
-      const leafZone = document.getElementById('leafZone');
       const hoverMessage = document.getElementById('hoverMessage');
       const leafImages = ['leaf1.png', 'leaf2.png', 'leaf3.png'];
 
@@ -187,32 +194,31 @@
         leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
         leaf.classList.add('falling-leaf');
 
-        // Start from center of tree image
+        // Position leaf near center of the tree
         const rect = treeImage.getBoundingClientRect();
-        const centerX = rect.width / 2;
-        const offsetX = (Math.random() - 0.5) * 80;
+        const offsetX = (Math.random() - 0.5) * 100;
+        leaf.style.left = `${treeImage.offsetLeft + treeImage.offsetWidth / 2 + offsetX}px`;
+        leaf.style.top = `80px`; // middle-ish
 
-        leaf.style.left = `${centerX + offsetX}px`;
-        leaf.style.top = '100px'; // roughly center of tree
-        leafZone.appendChild(leaf);
-
-        setTimeout(() => leaf.remove(), 3500);
+        treeZone.appendChild(leaf);
+        setTimeout(() => leaf.remove(), 6000);
       }
 
       function triggerLeafAnimationOnce() {
         if (animationPlayed) return;
 
-        for (let i = 0; i < 6; i++) {
-          setTimeout(createLeaf, i * 300);
+        for (let i = 0; i < 15; i++) {
+          setTimeout(createLeaf, i * 150);
         }
 
-        setTimeout(() => hoverMessage.classList.add('reveal'), 3000);
+        setTimeout(() => hoverMessage.classList.add('reveal'), 4000);
         sessionStorage.setItem('leafAnimationPlayed', 'true');
       }
 
-      treeImage.addEventListener('mouseenter', triggerLeafAnimationOnce);
+      // Trigger when user first hovers over tree zone
+      treeZone.addEventListener('mouseenter', triggerLeafAnimationOnce);
 
-      // Button Spins
+      // Bottom button spins
       document.getElementById('mysteryImage').addEventListener('click', function (e) {
         e.preventDefault();
         this.classList.remove('spin');
