@@ -64,47 +64,30 @@
       height: auto;
     }
 
-    .mystery-button,
-    .clematis-button {
-      position: fixed;
-      bottom: 20px;
-      z-index: 1000;
+    .bottom-buttons {
+      margin-top: 40px;
+    }
+
+    .bottom-button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .bottom-button img {
+      height: 80px;
       cursor: pointer;
-      text-align: center;
-    }
-
-    .mystery-button {
-      right: 20px;
-    }
-
-    .clematis-button {
-      left: 20px;
-    }
-
-    .mystery-button img,
-    .clematis-button img {
-      height: 100px;
       transition: transform 0.3s ease;
     }
 
-    .mystery-button img:hover,
-    .clematis-button img:hover {
+    .bottom-button img:hover {
       transform: scale(1.1);
-    }
-
-    @keyframes spin-once {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .spin {
-      animation: spin-once 0.8s ease-in-out;
     }
 
     .bottom-message {
       font-size: 0.95em;
       color: #444;
-      margin-top: 10px;
       opacity: 0;
       transition: opacity 0.3s ease;
       height: 0;
@@ -114,6 +97,15 @@
     .bottom-message.visible {
       opacity: 1;
       height: auto;
+    }
+
+    @keyframes spin-once {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .spin {
+      animation: spin-once 0.8s ease-in-out;
     }
   </style>
 </head>
@@ -133,27 +125,28 @@
       <p id="treeMessage" class="inline-message">
         Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
       </p>
+
+      <div class="bottom-buttons">
+        <div class="bottom-button">
+          <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
+          <span id="clematisMessage" class="bottom-message">
+            Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
+          </span>
+        </div>
+
+        <div class="bottom-button">
+          <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
+          <span id="futureMessage" class="bottom-message">
+            Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
+          </span>
+        </div>
+      </div>
     </div>
 
     <div class="leaf-button">
       <a href="projects.html" target="_blank">
         <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
       </a>
-    </div>
-  </div>
-
-  <!-- Bottom Buttons -->
-  <div class="clematis-button">
-    <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button" />
-    <div id="clematisMessage" class="bottom-message">
-      Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
-    </div>
-  </div>
-
-  <div class="mystery-button">
-    <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button" />
-    <div id="futureMessage" class="bottom-message">
-      Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
     </div>
   </div>
 
@@ -175,7 +168,6 @@
     showInlineMessage('mysteryImage', 'futureMessage', 'futureMsgShown');
     showInlineMessage('clematisImage', 'clematisMessage', 'clematisMsgShown');
 
-    // Spins
     document.getElementById('mysteryImage').addEventListener('click', function (e) {
       e.preventDefault();
       this.classList.remove('spin');
