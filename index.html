@@ -18,6 +18,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
+        position: relative;
       }
 
       .text-content {
@@ -51,7 +52,7 @@
 
       .floating-message {
         position: absolute;
-        background-color: #fdfdfd;
+        background-color: #fefefe;
         padding: 10px 14px;
         border: 1px solid #ccc;
         border-radius: 6px;
@@ -60,12 +61,11 @@
         color: #444;
         max-width: 240px;
         z-index: 1000;
-        opacity: 0;
-        transition: opacity 0.4s ease;
+        display: none;
       }
 
       .visible {
-        opacity: 1;
+        display: block;
       }
 
       .mystery-button,
@@ -110,71 +110,60 @@
   </head>
   <body>
     <div class="content-wrapper">
-      <!-- Text content on the left -->
       <div class="text-content">
         <h1>Weston Kirk</h1>
         <p>
           I'm an undergraduate at Stanford studying Earth Systems and Math.
           Currently, I work in the Daru Lab on a project involving crop wild relatives.
-          I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025 to work on translation for formal verification.
+          I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.
         </p>
 
         <h2>Contact</h2>
         <p>Email: wkirk@stanford.edu</p>
       </div>
 
-      <!-- Tree button on the right -->
-      <div class="leaf-button">
+      <div class="leaf-button" style="position: relative;">
         <a href="projects.html" target="_blank">
           <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
         </a>
+        <div class="floating-message" id="treeMsg" style="top: 210px; right: 0;">
+          Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
+        </div>
       </div>
     </div>
 
-    <!-- Floating Messages -->
-    <div id="treeMsg" class="floating-message" style="top: 230px; right: 60px;">
-      Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
+    <div class="mystery-button" style="position: fixed; right: 20px;">
+      <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button" />
+      <div class="floating-message" id="futureMsg" style="bottom: 110px; right: 0;">
+        Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations.
+      </div>
     </div>
 
-    <div id="futureMsg" class="floating-message" style="bottom: 130px; right: 140px;">
-      Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations.
+    <div class="clematis-button" style="position: fixed; left: 20px;">
+      <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button" />
+      <div class="floating-message" id="clematisMsg" style="bottom: 110px; left: 0;">
+        Click on the <em>Clematis texensis</em> seeds to read a little bit more about me.
+      </div>
     </div>
-
-    <div id="clematisMsg" class="floating-message" style="bottom: 130px; left: 140px;">
-      Click on the <em>Clematis texensis</em> seeds to read a little bit more about me.
-    </div>
-
-    <!-- Bottom Buttons -->
-    <a class="mystery-button" href="future.html" title="Future Work">
-      <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
-    </a>
-
-    <a class="clematis-button" href="clematis.html" title="Explore the Clematis">
-      <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
-    </a>
 
     <script>
-      function showOnce(id, storageKey) {
+      function showMessageOnce(imgId, msgId, storageKey) {
+        const img = document.getElementById(imgId);
+        const msg = document.getElementById(msgId);
         if (!sessionStorage.getItem(storageKey)) {
-          const el = document.getElementById(id);
-          el.classList.add('visible');
-          sessionStorage.setItem(storageKey, 'true');
-          setTimeout(() => el.classList.remove('visible'), 15000);
+          img.addEventListener('mouseenter', () => {
+            msg.classList.add('visible');
+            sessionStorage.setItem(storageKey, 'true');
+            setTimeout(() => msg.classList.remove('visible'), 15000);
+          });
         }
       }
 
-      document.getElementById('treeImage').addEventListener('mouseenter', () => {
-        showOnce('treeMsg', 'treeMessageShown');
-      });
+      showMessageOnce('treeImage', 'treeMsg', 'treeMessageShown');
+      showMessageOnce('mysteryImage', 'futureMsg', 'futureMessageShown');
+      showMessageOnce('clematisImage', 'clematisMsg', 'clematisMessageShown');
 
-      document.getElementById('mysteryImage').addEventListener('mouseenter', () => {
-        showOnce('futureMsg', 'futureMessageShown');
-      });
-
-      document.getElementById('clematisImage').addEventListener('mouseenter', () => {
-        showOnce('clematisMsg', 'clematisMessageShown');
-      });
-
+      // Button spins
       document.getElementById('mysteryImage').addEventListener('click', function (e) {
         e.preventDefault();
         this.classList.remove('spin');
