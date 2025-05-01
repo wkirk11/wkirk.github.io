@@ -49,7 +49,7 @@
       }
 
       .mystery-button img {
-        height: 75px; /* slightly larger */
+        height: 75px;
         transition: transform 0.3s ease;
       }
 
@@ -67,7 +67,7 @@
       }
 
       .clematis-button img {
-        height: 75px; /* slightly larger */
+        height: 75px;
         transition: transform 0.3s ease;
       }
 
@@ -92,18 +92,30 @@
     </a>
 
     <h1>Weston Kirk</h1>
-    <p>I'm an undergraduate at Stanford studying Earth Systems and Math. Currently, I work in the Daru Lab on a project involving crop wild relatives. I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.</p>
+    <p>
+      I'm an undergraduate at Stanford studying Earth Systems and Math. 
+      Currently, I work in the Daru Lab on a project involving crop wild relatives. 
+      I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.
+    </p>
 
     <h2>Contact</h2>
     <p>Email: wkirk@stanford.edu</p>
+
+    <h2>Clematis</h2>
+    <p>
+      I found this seed tangled in a fence on a hot day in Central Texas. 
+      It looked like a burst of wind frozen in time. 
+      I still don’t know exactly why I picked it up, but I kept it. 
+      Click the seed in the corner if you're curious too.
+    </p>
 
     <!-- Mysterious Flower Button -->
     <a class="mystery-button" href="future.html" title="Future Work">
       <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
     </a>
 
-    <!-- Clematis Seed Button -->
-    <a class="clematis-button" href="clematis.html" title="Explore the Clematis">
+    <!-- Clematis Seed Button linking to personal.html -->
+    <a class="clematis-button" href="personal.html" title="Explore the Clematis">
       <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
     </a>
 
@@ -120,7 +132,7 @@
         }, 800);
       });
 
-      // Clematis Seed Button Spin + Redirect
+      // Clematis Seed Button Spin + Redirect to personal.html
       const clematisImg = document.getElementById('clematisImage');
       clematisImg.addEventListener('click', function (e) {
         e.preventDefault();
@@ -128,7 +140,7 @@
         void clematisImg.offsetWidth;
         clematisImg.classList.add('spin');
         setTimeout(() => {
-          window.location.href = 'clematis.html';
+          window.location.href = 'personal.html';
         }, 800);
       });
     </script>
