@@ -1,184 +1,196 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Weston Kirk</title>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Lora', serif;
-        margin: 0;
-        padding: 40px;
-        background-color: #fff;
-        overflow-x: hidden;
-        position: relative;
-      }
+<head>
+  <meta charset="UTF-8">
+  <title>Weston Kirk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Lora', serif;
+      margin: 0;
+      padding: 40px;
+      background-color: #fff;
+      overflow-x: hidden;
+    }
 
-      .content-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        position: relative;
-      }
+    .content-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+    }
 
-      .text-content {
-        max-width: 50%;
-        text-align: left;
-      }
+    .text-content {
+      max-width: 50%;
+      text-align: left;
+    }
 
-      h1, h2 {
-        color: #333;
-        margin-top: 0;
-      }
+    h1, h2 {
+      color: #333;
+      margin-top: 0;
+    }
 
-      a {
-        color: #1a0dab;
-        text-decoration: none;
-      }
+    a {
+      color: #1a0dab;
+      text-decoration: none;
+    }
 
-      a:hover {
-        text-decoration: underline;
-      }
+    a:hover {
+      text-decoration: underline;
+    }
 
-      .leaf-button img {
-        max-height: 200px;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-      }
+    .leaf-button img {
+      max-height: 200px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
 
-      .leaf-button img:hover {
-        transform: scale(1.05);
-      }
+    .leaf-button img:hover {
+      transform: scale(1.05);
+    }
 
-      .floating-message {
-        position: absolute;
-        background-color: #fefefe;
-        padding: 10px 14px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        font-size: 0.95em;
-        color: #444;
-        max-width: 240px;
-        z-index: 1000;
-        display: none;
-      }
+    .inline-message {
+      font-size: 1em;
+      color: #444;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      height: 0;
+      overflow: hidden;
+    }
 
-      .visible {
-        display: block;
-      }
+    .inline-message.visible {
+      opacity: 1;
+      height: auto;
+    }
 
-      .mystery-button,
-      .clematis-button {
-        position: fixed;
-        bottom: 20px;
-        z-index: 1000;
-        cursor: pointer;
-      }
+    .mystery-button,
+    .clematis-button {
+      position: fixed;
+      bottom: 20px;
+      z-index: 1000;
+      cursor: pointer;
+      text-align: center;
+    }
 
-      .mystery-button {
-        right: 20px;
-      }
+    .mystery-button {
+      right: 20px;
+    }
 
-      .clematis-button {
-        left: 20px;
-      }
+    .clematis-button {
+      left: 20px;
+    }
 
-      .mystery-button img,
-      .clematis-button img {
-        height: 100px;
-        transition: transform 0.3s ease;
-      }
+    .mystery-button img,
+    .clematis-button img {
+      height: 100px;
+      transition: transform 0.3s ease;
+    }
 
-      .mystery-button img:hover {
-        transform: rotate(10deg) scale(1.1);
-      }
+    .mystery-button img:hover,
+    .clematis-button img:hover {
+      transform: scale(1.1);
+    }
 
-      .clematis-button img:hover {
-        transform: rotate(-10deg) scale(1.1);
-      }
+    @keyframes spin-once {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
 
-      @keyframes spin-once {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
+    .spin {
+      animation: spin-once 0.8s ease-in-out;
+    }
 
-      .spin {
-        animation: spin-once 0.8s ease-in-out;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="content-wrapper">
-      <div class="text-content">
-        <h1>Weston Kirk</h1>
-        <p>
-          I'm an undergraduate at Stanford studying Earth Systems and Math.
-          Currently, I work in the Daru Lab on a project involving crop wild relatives.
-          I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.
-        </p>
+    .bottom-message {
+      font-size: 0.95em;
+      color: #444;
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      height: 0;
+      overflow: hidden;
+    }
 
-        <h2>Contact</h2>
-        <p>Email: wkirk@stanford.edu</p>
-      </div>
+    .bottom-message.visible {
+      opacity: 1;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-wrapper">
+    <div class="text-content">
+      <h1>Weston Kirk</h1>
+      <p>
+        I'm an undergraduate at Stanford studying Earth Systems and Math.
+        Currently, I work in the Daru Lab on a project involving crop wild relatives.
+        I have recently been awarded the CURIS Fellowship and will be joining the STAIR Lab in June of 2025.
+      </p>
 
-      <div class="leaf-button" style="position: relative;">
-        <a href="projects.html" target="_blank">
-          <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
-        </a>
-        <div class="floating-message" id="treeMsg" style="top: 210px; right: 0;">
-          Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
-        </div>
-      </div>
+      <h2>Contact</h2>
+      <p>Email: wkirk@stanford.edu</p>
+
+      <p id="treeMessage" class="inline-message">
+        Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
+      </p>
     </div>
 
-    <div class="mystery-button" style="position: fixed; right: 20px;">
-      <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button" />
-      <div class="floating-message" id="futureMsg" style="bottom: 110px; right: 0;">
-        Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations.
-      </div>
+    <div class="leaf-button">
+      <a href="projects.html" target="_blank">
+        <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
+      </a>
     </div>
+  </div>
 
-    <div class="clematis-button" style="position: fixed; left: 20px;">
-      <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button" />
-      <div class="floating-message" id="clematisMsg" style="bottom: 110px; left: 0;">
-        Click on the <em>Clematis texensis</em> seeds to read a little bit more about me.
-      </div>
+  <!-- Bottom Buttons -->
+  <div class="clematis-button">
+    <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button" />
+    <div id="clematisMessage" class="bottom-message">
+      Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
     </div>
+  </div>
 
-    <script>
-      function showMessageOnce(imgId, msgId, storageKey) {
-        const img = document.getElementById(imgId);
-        const msg = document.getElementById(msgId);
-        if (!sessionStorage.getItem(storageKey)) {
-          img.addEventListener('mouseenter', () => {
-            msg.classList.add('visible');
-            sessionStorage.setItem(storageKey, 'true');
-            setTimeout(() => msg.classList.remove('visible'), 15000);
-          });
-        }
+  <div class="mystery-button">
+    <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button" />
+    <div id="futureMessage" class="bottom-message">
+      Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
+    </div>
+  </div>
+
+  <script>
+    function showInlineMessage(imgId, msgId, key) {
+      const img = document.getElementById(imgId);
+      const msg = document.getElementById(msgId);
+
+      if (!sessionStorage.getItem(key)) {
+        img.addEventListener('mouseenter', () => {
+          msg.classList.add('visible');
+          sessionStorage.setItem(key, 'true');
+          setTimeout(() => msg.classList.remove('visible'), 15000);
+        });
       }
+    }
 
-      showMessageOnce('treeImage', 'treeMsg', 'treeMessageShown');
-      showMessageOnce('mysteryImage', 'futureMsg', 'futureMessageShown');
-      showMessageOnce('clematisImage', 'clematisMsg', 'clematisMessageShown');
+    showInlineMessage('treeImage', 'treeMessage', 'treeMsgShown');
+    showInlineMessage('mysteryImage', 'futureMessage', 'futureMsgShown');
+    showInlineMessage('clematisImage', 'clematisMessage', 'clematisMsgShown');
 
-      // Button spins
-      document.getElementById('mysteryImage').addEventListener('click', function (e) {
-        e.preventDefault();
-        this.classList.remove('spin');
-        void this.offsetWidth;
-        this.classList.add('spin');
-        setTimeout(() => window.location.href = 'future.html', 800);
-      });
+    // Spins
+    document.getElementById('mysteryImage').addEventListener('click', function (e) {
+      e.preventDefault();
+      this.classList.remove('spin');
+      void this.offsetWidth;
+      this.classList.add('spin');
+      setTimeout(() => window.location.href = 'future.html', 800);
+    });
 
-      document.getElementById('clematisImage').addEventListener('click', function (e) {
-        e.preventDefault();
-        this.classList.remove('spin');
-        void this.offsetWidth;
-        this.classList.add('spin');
-        setTimeout(() => window.location.href = 'clematis.html', 800);
-      });
-    </script>
-  </body>
+    document.getElementById('clematisImage').addEventListener('click', function (e) {
+      e.preventDefault();
+      this.classList.remove('spin');
+      void this.offsetWidth;
+      this.classList.add('spin');
+      setTimeout(() => window.location.href = 'clematis.html', 800);
+    });
+  </script>
+</body>
 </html>
