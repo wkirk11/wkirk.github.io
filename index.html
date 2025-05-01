@@ -49,21 +49,6 @@
       transform: scale(1.05);
     }
 
-    .inline-message {
-      font-size: 1em;
-      color: #444;
-      margin-top: 20px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      height: 0;
-      overflow: hidden;
-    }
-
-    .inline-message.visible {
-      opacity: 1;
-      height: auto;
-    }
-
     .corner-button {
       position: fixed;
       bottom: 20px;
@@ -97,20 +82,17 @@
       animation: spin-once 0.8s ease-in-out;
     }
 
-    .bottom-messages {
-      margin-top: 40px;
-    }
-
-    .bottom-msg {
+    .hover-message {
       font-size: 1em;
       color: #444;
+      margin-top: 20px;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.5s ease;
       height: 0;
       overflow: hidden;
     }
 
-    .bottom-msg.visible {
+    .hover-message.visible {
       opacity: 1;
       height: auto;
       margin-bottom: 10px;
@@ -130,18 +112,15 @@
       <h2>Contact</h2>
       <p>Email: wkirk@stanford.edu</p>
 
-      <p id="treeMessage" class="inline-message">
+      <p id="treeMessage" class="hover-message">
         Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
       </p>
-
-      <div class="bottom-messages">
-        <p id="clematisMessage" class="bottom-msg">
-          Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
-        </p>
-        <p id="futureMessage" class="bottom-msg">
-          Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
-        </p>
-      </div>
+      <p id="clematisMessage" class="hover-message">
+        Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
+      </p>
+      <p id="futureMessage" class="hover-message">
+        Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
+      </p>
     </div>
 
     <div class="leaf-button">
@@ -161,23 +140,25 @@
   </a>
 
   <script>
-    function showInlineMessage(imgId, msgId, key) {
+    function setupHoverDisplay(imgId, msgId, sessionKey) {
       const img = document.getElementById(imgId);
       const msg = document.getElementById(msgId);
 
-      if (!sessionStorage.getItem(key)) {
-        img.addEventListener('mouseenter', () => {
-          msg.classList.add('visible');
-          sessionStorage.setItem(key, 'true');
-          setTimeout(() => msg.classList.remove('visible'), 15000);
-        });
-      }
+      img.addEventListener('mouseenter', () => {
+        if (sessionStorage.getItem(sessionKey)) return;
+
+        msg.classList.add('visible');
+        sessionStorage.setItem(sessionKey, 'true');
+
+        setTimeout(() => msg.classList.remove('visible'), 15000);
+      });
     }
 
-    showInlineMessage('treeImage', 'treeMessage', 'treeMsgShown');
-    showInlineMessage('mysteryImage', 'futureMessage', 'futureMsgShown');
-    showInlineMessage('clematisImage', 'clematisMessage', 'clematisMsgShown');
+    setupHoverDisplay('treeImage', 'treeMessage', 'treeMsgShown');
+    setupHoverDisplay('clematisImage', 'clematisMessage', 'clematisMsgShown');
+    setupHoverDisplay('mysteryImage', 'futureMessage', 'futureMsgShown');
 
+    // Add spin effects to corner buttons
     document.getElementById('mysteryImage').addEventListener('click', function (e) {
       e.preventDefault();
       this.classList.remove('spin');
