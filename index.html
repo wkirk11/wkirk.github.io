@@ -49,21 +49,21 @@
         position: absolute;
         width: 40px;
         pointer-events: none;
-        opacity: 0.8;
-        animation: gustAndSpin 3s ease-in-out forwards;
+        opacity: 0.9;
+        animation: gustSpin 3s ease-in-out forwards;
       }
 
-      @keyframes gustAndSpin {
+      @keyframes gustSpin {
         0% {
-          transform: translateY(0) translateX(0) rotate(0deg);
+          transform: translate(0, 0) rotate(0deg);
           opacity: 1;
         }
         50% {
-          transform: translateY(120px) translateX(30px) rotate(720deg);
+          transform: translate(40px, 150px) rotate(720deg);
           opacity: 0.9;
         }
         100% {
-          transform: translateY(250px) translateX(400px) rotate(1440deg);
+          transform: translate(400px, 280px) rotate(1440deg);
           opacity: 0;
         }
       }
@@ -83,7 +83,7 @@
       }
 
       .hover-message.reveal {
-        animation: revealText 2s steps(40, end) forwards;
+        animation: revealText 2s steps(50, end) forwards;
       }
 
       @keyframes revealText {
@@ -182,19 +182,20 @@
         const leaf = document.createElement('img');
         leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
         leaf.classList.add('falling-leaf');
-        leaf.style.left = Math.random() * 150 + 40 + 'px';
-        leaf.style.top = '-20px';
-        leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+        leaf.style.left = Math.random() * 120 + 40 + 'px';
+        leaf.style.top = '-40px';
         leafZone.appendChild(leaf);
         setTimeout(() => leaf.remove(), 3500);
       }
 
       function triggerLeafAnimationOnce() {
         if (animationPlayed) return;
-        for (let i = 0; i < 5; i++) {
+
+        for (let i = 0; i < 6; i++) {
           setTimeout(createLeaf, i * 300);
         }
-        setTimeout(() => hoverMessage.classList.add('reveal'), 2800);
+
+        setTimeout(() => hoverMessage.classList.add('reveal'), 3000);
         sessionStorage.setItem('leafAnimationPlayed', 'true');
       }
 
