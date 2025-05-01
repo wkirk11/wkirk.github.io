@@ -30,19 +30,21 @@
         text-decoration: underline;
       }
 
+      .leaf-button {
+        position: relative;
+        display: inline-block;
+      }
+
       .leaf-button img {
         max-height: 200px;
         cursor: pointer;
         transition: transform 0.2s ease;
+        z-index: 1;
+        position: relative;
       }
 
       .leaf-button img:hover {
         transform: scale(1.05);
-      }
-
-      .leaf-container {
-        position: relative;
-        display: inline-block;
       }
 
       .falling-leaf {
@@ -51,6 +53,7 @@
         pointer-events: none;
         opacity: 0.9;
         animation: gustSpin 3s ease-in-out forwards;
+        z-index: 0;
       }
 
       @keyframes gustSpin {
@@ -140,10 +143,10 @@
   </head>
   <body>
 
-    <!-- Tree Hover Zone -->
-    <div class="leaf-container" id="leafZone">
-      <a class="leaf-button" href="projects.html" target="_blank">
-        <img src="smoke_tree_branch.png" alt="Enter site via leaf image" />
+    <!-- Tree Zone with Falling Leaves -->
+    <div class="leaf-button" id="leafZone">
+      <a href="projects.html" target="_blank">
+        <img id="treeImage" src="smoke_tree_branch.png" alt="Enter site via leaf image" />
       </a>
     </div>
 
@@ -172,6 +175,7 @@
     </a>
 
     <script>
+      const treeImage = document.getElementById('treeImage');
       const leafZone = document.getElementById('leafZone');
       const hoverMessage = document.getElementById('hoverMessage');
       const leafImages = ['leaf1.png', 'leaf2.png', 'leaf3.png'];
@@ -182,9 +186,16 @@
         const leaf = document.createElement('img');
         leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
         leaf.classList.add('falling-leaf');
-        leaf.style.left = Math.random() * 120 + 40 + 'px';
-        leaf.style.top = '-40px';
+
+        // Start from center of tree image
+        const rect = treeImage.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const offsetX = (Math.random() - 0.5) * 80;
+
+        leaf.style.left = `${centerX + offsetX}px`;
+        leaf.style.top = '100px'; // roughly center of tree
         leafZone.appendChild(leaf);
+
         setTimeout(() => leaf.remove(), 3500);
       }
 
@@ -199,7 +210,7 @@
         sessionStorage.setItem('leafAnimationPlayed', 'true');
       }
 
-      leafZone.addEventListener('mouseenter', triggerLeafAnimationOnce);
+      treeImage.addEventListener('mouseenter', triggerLeafAnimationOnce);
 
       // Button Spins
       document.getElementById('mysteryImage').addEventListener('click', function (e) {
