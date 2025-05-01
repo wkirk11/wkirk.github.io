@@ -14,6 +14,7 @@
         background-color: #fff;
         text-align: center;
         position: relative;
+        overflow-x: hidden;
       }
 
       h1, h2 {
@@ -39,7 +40,47 @@
         transform: scale(1.05);
       }
 
-      /* Bottom Button Containers */
+      .leaf-container {
+        position: relative;
+        display: inline-block;
+      }
+
+      .falling-leaf {
+        position: absolute;
+        width: 40px;
+        pointer-events: none;
+        opacity: 0.8;
+        animation: driftAndFlip 2.5s ease forwards;
+      }
+
+      @keyframes driftAndFlip {
+        0% {
+          transform: translateY(0) translateX(0) rotateY(0deg);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-30px) translateX(60px) rotateY(180deg);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-10px) translateX(400px) rotateY(360deg);
+          opacity: 0;
+        }
+      }
+
+      .hover-message {
+        margin-top: 20px;
+        font-size: 1.1em;
+        color: #444;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .hover-message.visible {
+        opacity: 1;
+      }
+
+      /* Bottom Buttons */
       .mystery-button,
       .clematis-button {
         position: fixed;
@@ -56,7 +97,6 @@
         left: 20px;
       }
 
-      /* Shared Button Style */
       .mystery-button img,
       .clematis-button img {
         height: 100px;
@@ -71,7 +111,6 @@
         transform: rotate(-10deg) scale(1.1);
       }
 
-      /* Spin animation */
       @keyframes spin-once {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -83,12 +122,19 @@
     </style>
   </head>
   <body>
-    <!-- Top Entry Button -->
-    <a class="leaf-button" href="projects.html" target="_blank">
-      <img src="smoke_tree_branch.png" alt="Enter site via leaf image" />
-    </a>
 
-    <!-- Content -->
+    <!-- Tree Interaction Zone -->
+    <div class="leaf-container" id="leafZone">
+      <a class="leaf-button" href="projects.html" target="_blank">
+        <img src="smoke_tree_branch.png" alt="Enter site via leaf image" />
+      </a>
+    </div>
+
+    <!-- Message Appears After Animation -->
+    <div class="hover-message" id="hoverMessage">
+      Click on the American Smoke Tree to see some of my projects!
+    </div>
+
     <h1>Weston Kirk</h1>
     <p>
       I'm an undergraduate at Stanford studying Earth Systems and Math.
@@ -99,41 +145,61 @@
     <h2>Contact</h2>
     <p>Email: wkirk@stanford.edu</p>
 
-    <!-- Bottom Right: Milkweed Vine Flower Button -->
+    <!-- Bottom Buttons -->
     <a class="mystery-button" href="future.html" title="Future Work">
       <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
     </a>
 
-    <!-- Bottom Left: Clematis Seed Button -->
     <a class="clematis-button" href="clematis.html" title="Explore the Clematis">
       <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
     </a>
 
-    <!-- JavaScript for Spin and Redirect -->
     <script>
-      // Milkweed Vine Button Spin + Redirect
-      const mysteryImg = document.getElementById('mysteryImage');
-      mysteryImg.addEventListener('click', function (e) {
+      const leafZone = document.getElementById('leafZone');
+      const hoverMessage = document.getElementById('hoverMessage');
+      const leafImages = ['leaf1.png', 'leaf2.png', 'leaf3.png'];
+
+      let animationPlayed = sessionStorage.getItem('leafAnimationPlayed');
+
+      function createLeaf() {
+        const leaf = document.createElement('img');
+        leaf.src = leafImages[Math.floor(Math.random() * leafImages.length)];
+        leaf.classList.add('falling-leaf');
+        leaf.style.left = Math.random() * 120 + 40 + 'px';
+        leaf.style.top = '-20px';
+        leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+        leafZone.appendChild(leaf);
+        setTimeout(() => leaf.remove(), 3000);
+      }
+
+      function triggerLeafAnimationOnce() {
+        if (animationPlayed) return;
+        for (let i = 0; i < 5; i++) {
+          setTimeout(createLeaf, i * 300);
+        }
+        setTimeout(() => hoverMessage.classList.add('visible'), 2500);
+        sessionStorage.setItem('leafAnimationPlayed', 'true');
+      }
+
+      leafZone.addEventListener('mouseenter', triggerLeafAnimationOnce);
+
+      // Button Spins
+      document.getElementById('mysteryImage').addEventListener('click', function (e) {
         e.preventDefault();
-        mysteryImg.classList.remove('spin');
-        void mysteryImg.offsetWidth;
-        mysteryImg.classList.add('spin');
-        setTimeout(() => {
-          window.location.href = 'future.html';
-        }, 800);
+        this.classList.remove('spin');
+        void this.offsetWidth;
+        this.classList.add('spin');
+        setTimeout(() => window.location.href = 'future.html', 800);
       });
 
-      // Clematis Seed Button Spin + Redirect
-      const clematisImg = document.getElementById('clematisImage');
-      clematisImg.addEventListener('click', function (e) {
+      document.getElementById('clematisImage').addEventListener('click', function (e) {
         e.preventDefault();
-        clematisImg.classList.remove('spin');
-        void clematisImg.offsetWidth;
-        clematisImg.classList.add('spin');
-        setTimeout(() => {
-          window.location.href = 'clematis.html';
-        }, 800);
+        this.classList.remove('spin');
+        void this.offsetWidth;
+        this.classList.add('spin');
+        setTimeout(() => window.location.href = 'clematis.html', 800);
       });
     </script>
+
   </body>
 </html>
