@@ -85,17 +85,21 @@
     .hover-message {
       font-size: 1em;
       color: #444;
-      margin-top: 20px;
+      height: 1.5em;
       opacity: 0;
-      transition: opacity 0.5s ease;
-      height: 0;
-      overflow: hidden;
+      transition: opacity 0.4s ease;
+      margin-bottom: 12px;
     }
 
     .hover-message.visible {
       opacity: 1;
-      height: auto;
-      margin-bottom: 10px;
+    }
+
+    .message-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 5em;
     }
   </style>
 </head>
@@ -112,15 +116,17 @@
       <h2>Contact</h2>
       <p>Email: wkirk@stanford.edu</p>
 
-      <p id="treeMessage" class="hover-message">
-        Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
-      </p>
-      <p id="clematisMessage" class="hover-message">
-        Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
-      </p>
-      <p id="futureMessage" class="hover-message">
-        Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
-      </p>
+      <div class="message-container">
+        <p id="treeMessage" class="hover-message">
+          Click on the <em>Cotinus obovatus</em> branch to see some of my projects!
+        </p>
+        <p id="futureMessage" class="hover-message">
+          Click on the <em>Matelea reticulata</em> flower to learn more about my future plans and research aspirations
+        </p>
+        <p id="clematisMessage" class="hover-message">
+          Click on the <em>Clematis texensis</em> seeds to read a little bit more about me
+        </p>
+      </div>
     </div>
 
     <div class="leaf-button">
@@ -130,7 +136,7 @@
     </div>
   </div>
 
-  <!-- Bottom Corner Buttons -->
+  <!-- Corner Buttons -->
   <a class="corner-button clematis-button" href="clematis.html" title="Explore the Clematis">
     <img id="clematisImage" src="clematis_seeds.png" alt="Clematis Button">
   </a>
@@ -146,10 +152,8 @@
 
       img.addEventListener('mouseenter', () => {
         if (sessionStorage.getItem(sessionKey)) return;
-
         msg.classList.add('visible');
         sessionStorage.setItem(sessionKey, 'true');
-
         setTimeout(() => msg.classList.remove('visible'), 15000);
       });
     }
@@ -158,7 +162,7 @@
     setupHoverDisplay('clematisImage', 'clematisMessage', 'clematisMsgShown');
     setupHoverDisplay('mysteryImage', 'futureMessage', 'futureMsgShown');
 
-    // Add spin effects to corner buttons
+    // Button spins
     document.getElementById('mysteryImage').addEventListener('click', function (e) {
       e.preventDefault();
       this.classList.remove('spin');
