@@ -1,99 +1,102 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Projects – Weston Kirk</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Lora', serif;
-        max-width: 700px;
-        margin: 40px auto;
-        line-height: 1.6;
-        padding: 0 20px;
-        background-color: #fff;
-        text-align: center;
-      }
+<head>
+  <meta charset="UTF-8">
+  <title>Projects – Weston Kirk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Lora', serif;
+      margin: 40px auto;
+      line-height: 1.6;
+      padding: 0 20px;
+      background-color: #fff;
+      text-align: center;
+    }
 
-      h1 {
-        color: #333;
-      }
+    h1 {
+      color: #333;
+    }
 
-      .project-button {
-        display: block;
-        margin: 40px auto;
-        text-decoration: none;
-      }
+    .circle-container {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      margin: 60px auto;
+      border-radius: 50%;
+    }
 
-      .project-button img {
-        max-height: 200px;
-        transition: transform 0.2s ease;
-        cursor: pointer;
-      }
+    .project-button {
+      position: absolute;
+      width: 140px;
+      text-align: center;
+      transform-origin: center center;
+    }
 
-      .project-button:hover img {
-        transform: scale(1.05);
-      }
+    .project-button img {
+      max-height: 100px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
 
-      .project-title {
-        margin-top: 10px;
-        font-weight: bold;
-        font-size: 1.1em;
-        color: #333;
-      }
+    .project-button:hover img {
+      transform: scale(1.05);
+    }
 
-      .back-button {
-        display: inline-block;
-        margin: 40px auto;
-        padding: 10px 20px;
-        background-color: #eee;
-        color: #333;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: background-color 0.2s ease;
-      }
+    .project-title {
+      margin-top: 6px;
+      font-weight: bold;
+      font-size: 0.9em;
+      color: #333;
+    }
 
-      .back-button:hover {
-        background-color: #ccc;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Projects</h1>
-    <p>Below are some of my recent research and projects.</p>
+    .back-button {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 10px 20px;
+      background-color: #eee;
+      color: #333;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+    }
 
-    <!-- Jacob's Well Project -->
-    <a class="project-button" href="A_Dry_Jacobs_Well.pdf" target="_blank">
+    .back-button:hover {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Projects</h1>
+  <p>Below are some of my recent research and projects.</p>
+
+  <div class="circle-container">
+    <a class="project-button" href="A_Dry_Jacobs_Well.pdf" target="_blank" style="top: 0; left: 50%; transform: translate(-50%, 0);">
       <img src="water_crevasse.png" alt="Jacob's Well Hydro Study" />
-      <div class="project-title">A Dry Jacob’s Well: Hydrologic and Statistical Analysis</div>
+      <div class="project-title">A Dry Jacob’s Well</div>
     </a>
 
-    <!-- Apollo CNN Project -->
-    <a class="project-button" href="CS_197_Final_Paper.pdf" target="_blank">
+    <a class="project-button" href="CS_197_Final_Paper.pdf" target="_blank" style="top: 20%; left: 85%; transform: translate(-50%, -50%);">
       <img src="apollo_11_image.png" alt="Apollo 11 Moonquake CNN Project" />
-      <div class="project-title">Building a CNN for Moonquake Classification</div>
+      <div class="project-title">CNN for Moonquakes</div>
     </a>
 
-    <!-- BSURP Project Button -->
-<a class="project-button" href="CWR%20Project.png" target="_blank">
-  <img src="zizania_texana.png" alt="BSURP Crop Wild Relatives Project" />
-  <div class="project-title">Functional Diversity of Crop Wild Relatives</div>
-</a>
-
-    <!-- Flower Project -->
-    <a class="project-button" href="https://arcg.is/05XT0r1" target="_blank">
+    <a class="project-button" href="https://arcg.is/05XT0r1" target="_blank" style="top: 60%; left: 93%; transform: translate(-50%, -50%);">
       <img src="mountain_pink.png" alt="Zeltnera Mapping Project" />
-      <div class="project-title">Flower Color Visualized Via Voronoi Polygons</div>
+      <div class="project-title">Flower Color via Voronoi</div>
     </a>
 
-    <!-- Prairie Classification Project -->
-<a class="project-button" href="EARTHSYS142_Remote_Sensing_of_Land_Final_Project_Report.pdf" target="_blank">
-  <img src="prairie.png" alt="Blackland Prairie Remnant Classification Project" />
-  <div class="project-title">Classifying Prairie Remnants with Google Earth Engine</div>
-</a>
+    <a class="project-button" href="EARTHSYS142_Remote_Sensing_of_Land_Final_Project_Report.pdf" target="_blank" style="top: 90%; left: 65%; transform: translate(-50%, -50%);">
+      <img src="prairie.png" alt="Blackland Prairie Remnant Classification Project" />
+      <div class="project-title">Prairie Classification</div>
+    </a>
 
-    <!-- Back Button -->
-    <a class="back-button" href="index.html">&larr; Back to Home</a>
+    <a class="project-button" href="CWR%20Project.png" target="_blank" style="top: 90%; left: 35%; transform: translate(-50%, -50%);">
+      <img src="zizania_texana.png" alt="Crop Wild Relatives Project" />
+      <div class="project-title">CWR Functional Diversity</div>
+    </a>
+  </div>
 
-  </body>
+  <a class="back-button" href="index.html">&larr; Back to Home</a>
+</body>
 </html>
