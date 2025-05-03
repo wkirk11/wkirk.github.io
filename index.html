@@ -41,7 +41,7 @@
     }
 
     .leaf-button img {
-      max-height: 280px; /* Increased branch image size */
+      max-height: 280px;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
@@ -66,21 +66,12 @@
     }
 
     .corner-button img {
-      height: 140px; /* Increased corner image size */
+      height: 140px;
       transition: transform 0.3s ease;
     }
 
     .corner-button img:hover {
       transform: rotate(10deg) scale(1.1);
-    }
-
-    @keyframes spin-once {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .spin {
-      animation: spin-once 0.8s ease-in-out;
     }
 
     @keyframes fadeInTop {
@@ -165,23 +156,5 @@
     <img id="mysteryImage" src="milkweed_vine_bloom_2.png" alt="Mystery Button">
   </a>
 
-  <script>
-    // Spin + redirect buttons
-    document.getElementById('mysteryImage').addEventListener('click', function (e) {
-      e.preventDefault();
-      this.classList.remove('spin');
-      void this.offsetWidth;
-      this.classList.add('spin');
-      setTimeout(() => window.location.href = 'future.html', 800);
-    });
-
-    document.getElementById('clematisImage').addEventListener('click', function (e) {
-      e.preventDefault();
-      this.classList.remove('spin');
-      void this.offsetWidth;
-      this.classList.add('spin');
-      setTimeout(() => window.location.href = 'clematis.html', 800);
-    });
-  </script>
 </body>
 </html>
